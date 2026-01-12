@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { Lock, ArrowRight, User } from 'lucide-react';
 import styles from '@/styles/login.module.scss';
-import { useAlert } from '@/contexts/alert-context';
+import { useAlert } from '@/context/alert-context';
 import { useMutation } from '@tanstack/react-query';
 import userLogin from '@/services/user-login';
 import { AxiosError } from 'axios';

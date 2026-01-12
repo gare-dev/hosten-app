@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 import styles from '@/styles/alerts.module.scss';
 
-// Definições de Tipo
 type AlertType = 'success' | 'error' | 'warning' | 'info';
 
 interface Alert {
@@ -13,7 +12,7 @@ interface Alert {
     title?: string;
     message: string;
     duration: number;
-    isExiting?: boolean; // Controle da animação de saída
+    isExiting?: boolean;
 }
 
 interface AlertContextData {
@@ -26,12 +25,10 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
     const [alerts, setAlerts] = useState<Alert[]>([]);
 
     const removeAlert = useCallback((id: string) => {
-        // 1. Marca como "saindo" para ativar a animação CSS
         setAlerts((prev) => prev.map((alert) =>
             alert.id === id ? { ...alert, isExiting: true } : alert
         ));
 
-        // 2. Remove do estado após a animação terminar (400ms do CSS)
         setTimeout(() => {
             setAlerts((prev) => prev.filter((alert) => alert.id !== id));
         }, 400);
@@ -45,7 +42,6 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
     ) => {
         const id = Math.random().toString(36).substr(2, 9);
 
-        // Define títulos padrão se não forem passados
         const defaultTitles = {
             success: 'Success!',
             error: 'Error!',
@@ -64,7 +60,6 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
 
         setAlerts((prev) => [...prev, newAlert]);
 
-        // Timer automático para iniciar a remoção
         if (duration > 0) {
             setTimeout(() => {
                 removeAlert(id);
@@ -76,7 +71,6 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
         <AlertContext.Provider value={{ showAlert }}>
             {children}
 
-            {/* Container de Alertas (Renderizado no topo da app) */}
             <div className={styles.alertContainer}>
                 {alerts.map((alert) => (
                     <div
@@ -99,7 +93,6 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
                             <X size={18} />
                         </button>
 
-                        {/* Barrinha de progresso */}
                         <div className={styles.progressBar}>
                             <div
                                 className={styles.progressFill}

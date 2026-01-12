@@ -1,0 +1,255 @@
+$success: #10b981;
+$error: #ef4444;
+$warning: #f59e0b;
+$text-main: #1e293b;
+$text-light: #64748b;
+$card-bg: #ffffff;
+$primary: #284999;
+$border-color: #e2e8f0;
+
+.dashboardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.dashboardTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-main;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.refreshBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid $border-color;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    color: $text-main;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: $primary;
+        color: $primary;
+        background: #f8fafc;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: wait;
+    }
+
+    &.spinning svg {
+        animation: spin 1s linear infinite;
+    }
+}
+
+.processGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.processCard {
+    background: $card-bg;
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: $primary;
+    }
+
+    // Faixa lateral de status
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+    }
+
+    &.online::before {
+        background: $success;
+    }
+
+    &.errored::before,
+    &.stopped::before {
+        background: $error;
+    }
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+
+    .processName {
+        h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: $text-main;
+        }
+
+        span {
+            font-size: 0.8rem;
+            color: $text-light;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+            display: inline-block;
+        }
+    }
+
+    .statusBadge {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 4px 8px;
+        border-radius: 20px;
+
+        &.online {
+            background: rgba($success, 0.1);
+            color: darken($success, 10%);
+        }
+
+        &.offline {
+            background: rgba($error, 0.1);
+            color: darken($error, 10%);
+        }
+    }
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        font-size: 0.75rem;
+        color: $text-light;
+        text-transform: uppercase;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    strong {
+        font-size: 1rem;
+        color: $text-main;
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+.logsSection {
+    margin-top: auto; // Empurra para baixo se sobrar espaço
+    margin-bottom: 1rem;
+    background: #0f172a;
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+
+    .logPath {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 4px;
+
+        span {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+    }
+}
+
+// === BOTÕES DE AÇÃO ===
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: white;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #cbd5e1 !important; // Cinza desativado
+        }
+
+        &.btnStart {
+            background-color: $success;
+
+            &:hover:not(:disabled) {
+                background-color: darken($success, 10%);
+            }
+        }
+
+        &.btnStop {
+            background-color: $error;
+
+            &:hover:not(:disabled) {
+                background-color: darken($error, 10%);
+            }
+        }
+
+        &.btnRestart {
+            background-color: $primary; // Azul
+
+            &:hover:not(:disabled) {
+                background-color: darken($primary, 10%);
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

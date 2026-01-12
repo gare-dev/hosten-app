@@ -1,13 +1,10 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import { Server } from '@/types/server-type';
 import styles from '@/styles/server.module.scss';
 import { Server as ServerIcon, Info, Activity, Clock, RefreshCw, Cpu } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
+import { dehydrate, useQuery, QueryClient } from '@tanstack/react-query';
 import { serverService } from '@/services/server-service';
 
-// === HELPER FUNCTIONS ===
 const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 B';
     const k = 1024;
@@ -27,6 +24,21 @@ const formatDate = (dateString?: string) => {
     return new Date(dateString).toLocaleTimeString('pt-BR');
 };
 
+export async function getServerSideProps() {
+    const queryClient = new QueryClient();
+
+    await queryClient.prefetchQuery({
+        queryKey: ['servers'],
+        queryFn: serverService.getServers
+    });
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient)
+        }
+    };
+}
+
 export default function ServersPage() {
     const [secondsAgo, setSecondsAgo] = useState(0);
 
@@ -39,7 +51,6 @@ export default function ServersPage() {
 
     const servers = data?.servers || [];
 
-    // Visual time counter (updates every 1s only the text "X seconds ago")
     useEffect(() => {
         const timerInterval = setInterval(() => {
             setSecondsAgo(Math.floor((Date.now() - dataUpdatedAt) / 1000));
@@ -47,10 +58,8 @@ export default function ServersPage() {
         return () => clearInterval(timerInterval);
     }, [dataUpdatedAt]);
 
-    // Double Click Handler
     const handleServerDoubleClick = (server: Server) => {
         console.log(`Redirecting to server: ${server.name} (${server.clientId})`);
-        // Here you will implement the actual navigation, e.g.: router.push(`/servers/${server.clientId}`)
         alert(`Redirecting to dashboard of: ${server.name}`);
     };
 

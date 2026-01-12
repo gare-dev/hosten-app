@@ -36,6 +36,30 @@ class _Api {
     return this._instance.get("/server");
   }
 
+  public sendCommand(command: string, clientId: string, payload?: { app: string, options: string, script: string }) {
+    return this._instance.post(`/server/command`, {
+      type: command,
+      clientId,
+      payload
+    });
+  }
+
+  public async getProcesses(clientId: string) {
+    return this._instance.get(`/server/${clientId}/processes`);
+  }
+
+  public async startProcess(clientId: string, processName: string) {
+    return this._instance.post(`/server/${clientId}/processes/${processName}/start`);
+  }
+
+  public async stopProcess(clientId: string, processName: string) {
+    return this._instance.post(`/server/${clientId}/processes/${processName}/stop`);
+  }
+
+  public async restartProcess(clientId: string, processName: string) {
+    return this._instance.post(`/server/${clientId}/processes/${processName}/restart`);
+  }
+
 }
 
 const Api = new _Api(process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5450");
