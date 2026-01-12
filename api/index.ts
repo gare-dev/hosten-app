@@ -48,17 +48,18 @@ class _Api {
     return this._instance.get(`/server/${clientId}/processes`);
   }
 
-  public async startProcess(clientId: string, processName: string) {
-    return this._instance.post(`/server/${clientId}/processes/${processName}/start`);
+  public async getRoles() {
+    return this._instance.get(`/role`);
   }
 
-  public async stopProcess(clientId: string, processName: string) {
-    return this._instance.post(`/server/${clientId}/processes/${processName}/stop`);
+  public async insertRole(role: string) {
+    return this._instance.post(`/role`, { name: role });
   }
 
-  public async restartProcess(clientId: string, processName: string) {
-    return this._instance.post(`/server/${clientId}/processes/${processName}/restart`);
+  public async deleteRole(id: string) {
+    return this._instance.delete(`/role/${id}`);
   }
+
 
 }
 

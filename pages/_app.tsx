@@ -1,4 +1,5 @@
 import { AlertProvider } from "@/context/alert-context";
+import { ConfirmProvider } from "@/context/confirm-context";
 import { ServerProvider } from "@/context/server-context";
 import "@/styles/globals.css";
 import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -11,11 +12,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <HydrationBoundary state={pageProps.dehydratedState}>
-        <ServerProvider>
-          <AlertProvider>
-            <Component {...pageProps} />
-          </AlertProvider>
-        </ServerProvider>
+        <ConfirmProvider>
+          <ServerProvider>
+            <AlertProvider>
+              <Component {...pageProps} />
+            </AlertProvider>
+          </ServerProvider>
+        </ConfirmProvider>
       </HydrationBoundary>
     </QueryClientProvider>)
 }

@@ -5,10 +5,10 @@ import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
 import ServerLayout from '@/components/Layout/ServerLayout';
 import styles from '@/styles/dashboard.module.scss';
-import { ProcessInfo } from '../../../../types/process';
 import { Activity, Cpu, HardDrive, Clock, RefreshCw, Play, Square, RotateCw } from 'lucide-react';
 import Api from '@/api';
 import fetchProcesses from '@/services/processes-service';
+import useServer from '@/hooks/useServer';
 
 const formatMemory = (bytes: number) => {
     if (bytes === 0) return '0 MB';
@@ -27,10 +27,10 @@ const formatUptime = (startTime: number) => {
 };
 
 export default function ServerDashboard() {
-
     const router = useRouter();
     const { server: clientId } = router.query as { server: string };
     const queryClient = useQueryClient();
+    const { setServer } = useServer()
 
     // Aqui você pode obter o serverName do contexto ou de outra fonte
     const serverName = "gare-server"; // TODO: obter dinamicamente
