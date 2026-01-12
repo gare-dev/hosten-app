@@ -1,0 +1,327 @@
+$primary-color: #284999;
+$primary-hover: darken($primary-color, 10%);
+$success-color: #10b981;
+$danger-color: #ef4444;
+$bg-color: #f8fafc;
+$card-bg: #ffffff;
+$text-main: #1e293b;
+$text-light: #64748b;
+$border-color: #e2e8f0;
+
+.container {
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: $bg-color;
+    font-family: 'Inter', sans-serif;
+    animation: fadeIn 0.5s ease;
+}
+
+// Cabeçalho com Flexbox para separar Título dos Controles
+.header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .titleGroup {
+        h1 {
+            font-size: 1.8rem;
+            color: $primary-color;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: $text-light;
+            margin: 0;
+        }
+    }
+}
+
+// Controles de Refresh
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .lastUpdate {
+        font-size: 0.85rem;
+        color: $text-light;
+        font-variant-numeric: tabular-nums; // Evita que os números pulem
+    }
+
+    .refreshBtn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+
+        &:hover {
+            background-color: $primary-hover;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        // Animação de giro do ícone
+        &.loading svg {
+            animation: spin 1s linear infinite;
+        }
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+}
+
+// O CARD DO SERVIDOR
+.serverCard {
+    background: $card-bg;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid $border-color;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer; // Indica que é clicável
+    user-select: none; // Evita selecionar texto ao dar double click
+
+    // Feedback de Hover
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+        border-color: rgba($primary-color, 0.3);
+    }
+
+    // Feedback de Active (Clique)
+    &:active {
+        transform: scale(0.98);
+        background-color: #fcfcfc;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background-color: $text-light;
+        transition: background-color 0.3s;
+    }
+
+    &.connected::before {
+        background-color: $success-color;
+        box-shadow: 0 0 10px rgba($success-color, 0.4);
+    }
+
+    &.disconnected::before {
+        background-color: $danger-color;
+    }
+}
+
+.cardHeader {
+    padding: 1.5rem 1.5rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .nameWrapper {
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: $text-main;
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    .statusBadge {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &.online {
+            background: rgba($success-color, 0.1);
+            color: darken($success-color, 10%);
+        }
+
+        &.offline {
+            background: rgba($danger-color, 0.1);
+            color: darken($danger-color, 10%);
+        }
+    }
+}
+
+.environmentBadge {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #eff6ff;
+    color: $primary-color;
+    border: 1px solid rgba($primary-color, 0.2);
+    font-weight: 500;
+}
+
+.cardBody {
+    padding: 0.5rem 1.5rem 1.5rem;
+    flex: 1;
+
+    .infoRow {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: $text-light;
+        font-size: 0.9rem;
+    }
+
+    .clientId {
+        font-family: monospace;
+        background: #f1f5f9;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        color: #475569;
+        word-break: break-all;
+    }
+}
+
+.cardFooter {
+    padding: 1rem 1.5rem;
+    background: #f8fafc;
+    border-top: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between; // Mudado para caber o hint
+    align-items: center;
+
+    .dblClickHint {
+        font-size: 0.7rem;
+        color: #94a3b8;
+        font-style: italic;
+        opacity: 0.7;
+    }
+}
+
+// Lógica do Tooltip (Mantida igual, apenas garantindo z-index)
+.tooltipWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: help; // Cursor diferente para o ícone
+
+    .infoIcon {
+        color: $primary-color;
+        transition: color 0.2s;
+
+        &:hover {
+            color: darken($primary-color, 15%);
+        }
+    }
+
+    .tooltipContent {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        bottom: 140%;
+        right: 0;
+        width: 260px;
+        background: #1e293b;
+        color: #fff;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+        z-index: 20;
+        pointer-events: none; // Importante para não atrapalhar o clique no card
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(10px);
+        cursor: default;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 10px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        h4 {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 4px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        span:first-child {
+            opacity: 0.7;
+        }
+
+        span:last-child {
+            font-weight: 600;
+            font-family: monospace;
+        }
+    }
+
+    &:hover .tooltipContent {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

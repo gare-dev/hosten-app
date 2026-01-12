@@ -32,6 +32,10 @@ class _Api {
     return this._instance.post("/user/auth", data);
   }
 
+  public async getServers() {
+    return this._instance.get("/server");
+  }
+
 }
 
 const Api = new _Api(process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5450");

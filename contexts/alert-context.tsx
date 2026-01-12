@@ -47,10 +47,10 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
 
         // Define títulos padrão se não forem passados
         const defaultTitles = {
-            success: 'Sucesso!',
-            error: 'Erro!',
-            warning: 'Atenção!',
-            info: 'Informação'
+            success: 'Success!',
+            error: 'Error!',
+            warning: 'Warning!',
+            info: 'Information'
         };
 
         const newAlert: Alert = {
