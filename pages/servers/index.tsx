@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Server } from '@/types/server-type';
 import styles from '@/styles/server.module.scss';
-import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu } from 'lucide-react';
+import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu, Plus } from 'lucide-react';
 import { dehydrate, useQuery, QueryClient } from '@tanstack/react-query';
 import { serverService } from '@/services/server-service';
 import { useAlert } from '@/context/alert-context';
 import { ThemeToggle } from '@/context/theme-context';
 import { useRouter } from 'next/router';
+import { AddServerModal } from '@/components/AddServerModal/AddServerModal';
 
 const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 B';
@@ -45,6 +46,7 @@ export async function getServerSideProps() {
 
 export default function ServersPage() {
     const [secondsAgo, setSecondsAgo] = useState(0);
+    const [isAddServerOpen, setIsAddServerOpen] = useState(false);
     const { showAlert } = useAlert();
     const router = useRouter()
 
@@ -78,6 +80,13 @@ export default function ServersPage() {
                 </div>
 
                 <div className={styles.controls}>
+                    <button
+                        className={styles.addServerBtn}
+                        onClick={() => setIsAddServerOpen(true)}
+                    >
+                        <Plus size={18} />
+                        Add Server
+                    </button>
                     <ThemeToggle className={styles.themeToggle} />
                     <span className={styles.lastUpdate}>
                         Updated {secondsAgo} seconds ago
@@ -166,6 +175,12 @@ export default function ServersPage() {
                     );
                 })}
             </div>
+
+            {/* Add Server Modal */}
+            <AddServerModal
+                isOpen={isAddServerOpen}
+                onClose={() => setIsAddServerOpen(false)}
+            />
         </div>
     );
 }

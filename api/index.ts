@@ -1,5 +1,6 @@
 import loginType from "@/types/login-type";
 import { RegisterPayload } from "@/types/register-type";
+import { CreateServerPayload } from "@/types/create-server";
 import { handleDates } from "@/utils/date";
 import { showAlertAfterRedirect } from "@/context/alert-context";
 
@@ -27,7 +28,9 @@ class _Api {
         return { ...response, data: handleDates(response.data) };
       },
       (error) => {
-        if (typeof window !== 'undefined' && error.response?.status === 401) {
+        const isAuthRoute = error.config?.url?.includes('/user/auth');
+
+        if (typeof window !== 'undefined' && error.response?.status === 401 && !isAuthRoute) {
           showAlertAfterRedirect('error', 'Session expired. Please log in again.');
           window.location.href = '/';
         }
@@ -53,6 +56,10 @@ class _Api {
 
   public async getServers() {
     return this._instance.get("/server");
+  }
+
+  public async createServer(data: CreateServerPayload) {
+    return this._instance.post("/server", data);
   }
 
   public sendCommand(command: string, clientId: string, payload?: { app: string, options: string, script: string }) {

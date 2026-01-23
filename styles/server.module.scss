@@ -60,6 +60,31 @@
         }
     }
 
+    .addServerBtn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.2rem;
+        background: linear-gradient(135deg, var(--color-success), #059669);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
     .lastUpdate {
         font-size: 0.85rem;
         color: var(--text-secondary);

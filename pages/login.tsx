@@ -288,6 +288,7 @@ export default function LoginPage() {
         mutationFn: userLogin,
         onSuccess: () => {
             showAlert('success', 'Welcome back! Redirecting...');
+            console.log("Redirecting to:", redirectTo);
             router.push(redirectTo);
         },
         onError: (error) => {

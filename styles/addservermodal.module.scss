@@ -1,0 +1,655 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Add Server Modal Styles
+// Uses CSS custom properties from theme.scss for dark mode support
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Overlay
+// ─────────────────────────────────────────────────────────────────────────────
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-overlay);
+    backdrop-filter: blur(6px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.2s ease-out forwards;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Modal Container
+// ─────────────────────────────────────────────────────────────────────────────
+
+.modal {
+    background: var(--bg-surface);
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    font-family: var(--font-family);
+    transform: scale(0.95);
+    opacity: 0;
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+.header {
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .iconWrapper {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-dark));
+        color: white;
+        box-shadow: 0 4px 12px rgba(40, 73, 153, 0.3);
+    }
+
+    .titleContent {
+        flex: 1;
+
+        h2 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color var(--transition-slow);
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: color var(--transition-slow);
+        }
+    }
+
+    .closeButton {
+        flex-shrink: 0;
+        padding: 0.5rem;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background: var(--bg-surface-hover);
+            color: var(--text-primary);
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Form Styles
+// ─────────────────────────────────────────────────────────────────────────────
+
+.form {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        transition: color var(--transition-slow);
+
+        .required {
+            color: var(--color-error);
+            margin-left: 2px;
+        }
+
+        .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.8rem;
+            margin-left: 4px;
+        }
+    }
+
+    &.hasError {
+        label {
+            color: var(--color-error);
+        }
+
+        .formInput,
+        .formSelect,
+        .formTextarea {
+            border-color: var(--border-error);
+            box-shadow: var(--shadow-error);
+
+            &:focus {
+                border-color: var(--color-error);
+                box-shadow: var(--shadow-error);
+            }
+        }
+    }
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    transition: color var(--transition-slow);
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.75rem;
+    font-size: 0.95rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    transition: all 0.2s;
+
+    &::placeholder {
+        color: var(--text-muted);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: var(--border-focus);
+        box-shadow: var(--shadow-focus);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.formSelect {
+    @extend .formInput;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 2.5rem;
+
+    option {
+        background: var(--bg-surface);
+        color: var(--text-primary);
+    }
+}
+
+.formTextarea {
+    @extend .formInput;
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--color-error);
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Actions
+// ─────────────────────────────────────────────────────────────────────────────
+
+.actions {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+.btnCancel {
+    background-color: var(--bg-surface);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-slow);
+
+    &:hover:not(:disabled) {
+        background-color: var(--bg-surface-hover);
+        border-color: var(--border-color-strong);
+    }
+}
+
+.btnSubmit {
+    background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-dark));
+    color: white;
+    box-shadow: 0 4px 12px rgba(40, 73, 153, 0.3);
+
+    &:hover:not(:disabled) {
+        box-shadow: 0 6px 20px rgba(40, 73, 153, 0.4);
+        transform: translateY(-1px);
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Success View
+// ─────────────────────────────────────────────────────────────────────────────
+
+.successView {
+    padding: 1.5rem;
+}
+
+.successHeader {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    .successIcon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        background: linear-gradient(135deg, var(--color-success), #059669);
+        color: white;
+        box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+
+    h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        transition: color var(--transition-slow);
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        transition: color var(--transition-slow);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Security Warning
+// ─────────────────────────────────────────────────────────────────────────────
+
+.securityWarning {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+
+    .warningIcon {
+        flex-shrink: 0;
+        color: var(--color-warning);
+    }
+
+    .warningContent {
+        h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-warning);
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            transition: color var(--transition-slow);
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Credentials Box
+// ─────────────────────────────────────────────────────────────────────────────
+
+.credentialsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.credentialBox {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
+
+    .credentialLabel {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color var(--transition-slow);
+
+        svg {
+            color: var(--color-brand-primary);
+        }
+    }
+
+    .credentialValue {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        justify-content: space-between;
+
+        code {
+            flex: 1;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            word-break: break-all;
+            background: var(--bg-surface);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-slow);
+        }
+
+        .copyBtn {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background: var(--bg-surface-hover);
+                color: var(--text-primary);
+                border-color: var(--border-color-strong);
+            }
+
+            &.copied {
+                background: rgba(16, 185, 129, 0.15);
+                border-color: var(--color-success);
+                color: var(--color-success);
+            }
+        }
+    }
+
+    &.secret {
+        background: rgba(239, 68, 68, 0.05);
+        border-color: rgba(239, 68, 68, 0.2);
+
+        .credentialLabel {
+            svg {
+                color: var(--color-error);
+            }
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Acknowledgment
+// ─────────────────────────────────────────────────────────────────────────────
+
+.acknowledgment {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background: var(--bg-surface-hover);
+        border-color: var(--border-color-strong);
+    }
+
+    &.checked {
+        background: rgba(16, 185, 129, 0.1);
+        border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .checkbox {
+        width: auto;
+        padding: 0;
+        margin-top: 2px;
+        flex-shrink: 0;
+        cursor: pointer;
+        accent-color: var(--color-success);
+    }
+
+    label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        cursor: pointer;
+        transition: color var(--transition-slow);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Documentation Link
+// ─────────────────────────────────────────────────────────────────────────────
+
+.docLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: transparent;
+    border: 1px dashed var(--border-color);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 1rem;
+
+    &:hover {
+        background: var(--bg-surface-hover);
+        border-color: var(--color-brand-primary);
+        color: var(--color-brand-primary);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Success Actions
+// ─────────────────────────────────────────────────────────────────────────────
+
+.successActions {
+    display: flex;
+    justify-content: center;
+
+    .btnDone {
+        padding: 0.85rem 2rem;
+        background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-primary-dark));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(40, 73, 153, 0.3);
+
+        &:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(40, 73, 153, 0.4);
+            transform: translateY(-1px);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Animations
+// ─────────────────────────────────────────────────────────────────────────────
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Responsive
+// ─────────────────────────────────────────────────────────────────────────────
+
+@media (max-width: 480px) {
+    .modal {
+        max-height: 95vh;
+    }
+
+    .header {
+        padding: 1.25rem 1.25rem 0;
+
+        .iconWrapper {
+            width: 40px;
+            height: 40px;
+        }
+
+        .titleContent h2 {
+            font-size: 1.1rem;
+        }
+    }
+
+    .form {
+        padding: 1.25rem;
+    }
+
+    .actions {
+        padding: 0 1.25rem 1.25rem;
+        flex-direction: column-reverse;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .successView {
+        padding: 1.25rem;
+    }
+
+    .credentialBox .credentialValue {
+        flex-direction: column;
+        gap: 0.5rem;
+
+        code {
+            width: 100%;
+        }
+
+        .copyBtn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+}
