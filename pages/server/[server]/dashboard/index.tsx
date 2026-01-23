@@ -48,7 +48,6 @@ export default function ServerDashboard() {
 
     const handleAction = async (action: 'start' | 'stop' | 'restart', processName: string, processId?: string) => {
         try {
-            console.log(processName)
             if (action === 'start') {
                 await Api.sendCommand("PM2_START", clientId, {
                     app: "",

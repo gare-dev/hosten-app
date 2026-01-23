@@ -1,4 +1,5 @@
 import loginType from "@/types/login-type";
+import { RegisterPayload } from "@/types/register-type";
 import { handleDates } from "@/utils/date";
 import { showAlertAfterRedirect } from "@/context/alert-context";
 
@@ -40,6 +41,10 @@ class _Api {
 
   public async login(data: loginType) {
     return this._instance.post("/user/auth", data);
+  }
+
+  public async register(data: RegisterPayload) {
+    return this._instance.post("/user", data);
   }
 
   public async logout() {

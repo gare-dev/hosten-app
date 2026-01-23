@@ -1,0 +1,180 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Variables - Shared Design System
+// ─────────────────────────────────────────────────────────────────────────────
+
+$primary-color: #284999;
+$primary-light: #3b5cb8;
+
+$bg-input: #0d1320;
+
+$text-primary: #ffffff;
+$text-secondary: #94a3b8;
+$text-muted: #64748b;
+$text-error: #f87171;
+
+$border-color: rgba(255, 255, 255, 0.1);
+$shadow-focus: 0 0 0 3px rgba($primary-color, 0.2);
+$shadow-error: 0 0 0 3px rgba($text-error, 0.15);
+
+$radius-sm: 8px;
+$transition: all 0.2s ease;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Input Group Container
+// ─────────────────────────────────────────────────────────────────────────────
+
+.inputGroup {
+    margin-bottom: 1rem;
+    position: relative;
+
+    label {
+        display: block;
+        margin-bottom: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: $text-secondary;
+        transition: $transition;
+    }
+
+    &.hasError {
+        label {
+            color: $text-error;
+        }
+
+        .inputWrapper input {
+            border-color: rgba($text-error, 0.5);
+
+            &:focus {
+                border-color: $text-error;
+                box-shadow: $shadow-error;
+            }
+        }
+
+        .inputIcon {
+            color: $text-error;
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Input Wrapper & Input
+// ─────────────────────────────────────────────────────────────────────────────
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 1rem;
+    color: $text-muted;
+    transition: $transition;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.inputWrapper input {
+    width: 100%;
+    padding: 0.8125rem 1rem 0.8125rem 2.75rem;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    background: $bg-input;
+    font-size: 0.9375rem;
+    color: $text-primary;
+    transition: $transition;
+    outline: none;
+
+    &::placeholder {
+        color: $text-muted;
+    }
+
+    &:hover:not(:disabled) {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:focus {
+        border-color: $primary-color;
+        box-shadow: $shadow-focus;
+        background: rgba($bg-input, 0.8);
+    }
+
+    &:focus+.inputIcon,
+    &:focus~.inputIcon {
+        color: $primary-color;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Password Toggle Button
+// ─────────────────────────────────────────────────────────────────────────────
+
+.passwordToggle {
+    position: absolute;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: $text-muted;
+    border-radius: $radius-sm;
+    transition: $transition;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover:not(:disabled) {
+        color: $text-secondary;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary-color;
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Error Message
+// ─────────────────────────────────────────────────────────────────────────────
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 0.375rem;
+    font-size: 0.8125rem;
+    color: $text-error;
+    animation: slideIn 0.2s ease;
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Animations
+// ─────────────────────────────────────────────────────────────────────────────
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

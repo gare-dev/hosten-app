@@ -21,6 +21,7 @@ import {
 import styles from '@/styles/serverlayout.module.scss';
 import { useRouter } from 'next/router';
 import { useConfirm } from '@/context/confirm-context';
+import { ThemeToggle } from '@/context/theme-context';
 import Api from '@/api';
 
 interface ServerLayoutProps {
@@ -154,6 +155,7 @@ export default function ServerLayout({ children, serverName = "Unknown Server", 
                     </div>
 
                     <div className={styles.headerActions}>
+                        <ThemeToggle className={styles.themeToggle} />
                         <button onClick={handleLogoff} className={styles.logoffBtn}>
                             <SquareX size={18} /> <span>Disconnect</span>
                         </button>

@@ -1,19 +1,15 @@
-$primary-color: #284999;
-$primary-hover: darken($primary-color, 10%);
-$success-color: #10b981;
-$danger-color: #ef4444;
-$bg-color: #f8fafc;
-$card-bg: #ffffff;
-$text-main: #1e293b;
-$text-light: #64748b;
-$border-color: #e2e8f0;
+// ─────────────────────────────────────────────────────────────────────────────
+// Servers List Page Styles
+// Uses CSS custom properties from theme.scss for dark mode support
+// ─────────────────────────────────────────────────────────────────────────────
 
 .container {
     min-height: 100vh;
     padding: 2rem;
-    background-color: $bg-color;
-    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    font-family: var(--font-family);
     animation: fadeIn 0.5s ease;
+    transition: background-color var(--transition-slow);
 }
 
 .header {
@@ -27,14 +23,15 @@ $border-color: #e2e8f0;
     .titleGroup {
         h1 {
             font-size: 1.8rem;
-            color: $primary-color;
+            color: var(--color-brand-primary);
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
         p {
-            color: $text-light;
+            color: var(--text-secondary);
             margin: 0;
+            transition: color var(--transition-slow);
         }
     }
 }
@@ -44,10 +41,30 @@ $border-color: #e2e8f0;
     align-items: center;
     gap: 1rem;
 
+    .themeToggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.6rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--bg-surface);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background: var(--bg-surface-hover);
+            color: var(--text-primary);
+            border-color: var(--border-color-strong);
+        }
+    }
+
     .lastUpdate {
         font-size: 0.85rem;
-        color: $text-light;
+        color: var(--text-secondary);
         font-variant-numeric: tabular-nums;
+        transition: color var(--transition-slow);
     }
 
     .refreshBtn {
@@ -55,7 +72,7 @@ $border-color: #e2e8f0;
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 1.2rem;
-        background-color: $primary-color;
+        background-color: var(--color-brand-primary);
         color: white;
         border: none;
         border-radius: 8px;
@@ -65,9 +82,9 @@ $border-color: #e2e8f0;
         font-size: 0.9rem;
 
         &:hover {
-            background-color: $primary-hover;
+            background-color: var(--color-brand-primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+            box-shadow: 0 4px 12px rgba(40, 73, 153, 0.3);
         }
 
         &:active {
@@ -93,26 +110,27 @@ $border-color: #e2e8f0;
 }
 
 .serverCard {
-    background: $card-bg;
+    background: var(--card-bg);
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    border: 1px solid $border-color;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
     overflow: hidden;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease, background-color var(--transition-slow), border-color var(--transition-slow);
     position: relative;
     display: flex;
     flex-direction: column;
-    cursor: pointer; 
-    user-select: none; 
+    cursor: pointer;
+    user-select: none;
 
     &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
-        border-color: rgba($primary-color, 0.3);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(40, 73, 153, 0.3);
     }
+
     &:active {
         transform: scale(0.98);
-        background-color: #fcfcfc;
+        background-color: var(--bg-surface-hover);
     }
 
     &::before {
@@ -122,17 +140,17 @@ $border-color: #e2e8f0;
         left: 0;
         right: 0;
         height: 4px;
-        background-color: $text-light;
+        background-color: var(--text-muted);
         transition: background-color 0.3s;
     }
 
     &.connected::before {
-        background-color: $success-color;
-        box-shadow: 0 0 10px rgba($success-color, 0.4);
+        background-color: var(--color-success);
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
     }
 
     &.disconnected::before {
-        background-color: $danger-color;
+        background-color: var(--color-error);
     }
 }
 
@@ -146,8 +164,9 @@ $border-color: #e2e8f0;
         h2 {
             font-size: 1.1rem;
             font-weight: 600;
-            color: $text-main;
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
+            transition: color var(--transition-slow);
         }
     }
 
@@ -159,13 +178,13 @@ $border-color: #e2e8f0;
         text-transform: uppercase;
 
         &.online {
-            background: rgba($success-color, 0.1);
-            color: darken($success-color, 10%);
+            background: var(--badge-success-bg);
+            color: var(--badge-success-text);
         }
 
         &.offline {
-            background: rgba($danger-color, 0.1);
-            color: darken($danger-color, 10%);
+            background: var(--badge-error-bg);
+            color: var(--badge-error-text);
         }
     }
 }
@@ -175,9 +194,9 @@ $border-color: #e2e8f0;
     font-size: 0.75rem;
     padding: 2px 6px;
     border-radius: 4px;
-    background: #eff6ff;
-    color: $primary-color;
-    border: 1px solid rgba($primary-color, 0.2);
+    background: var(--badge-info-bg);
+    color: var(--badge-info-text);
+    border: 1px solid rgba(40, 73, 153, 0.2);
     font-weight: 500;
 }
 
@@ -190,32 +209,35 @@ $border-color: #e2e8f0;
         align-items: center;
         gap: 0.5rem;
         margin-bottom: 0.5rem;
-        color: $text-light;
+        color: var(--text-secondary);
         font-size: 0.9rem;
+        transition: color var(--transition-slow);
     }
 
     .clientId {
         font-family: monospace;
-        background: #f1f5f9;
+        background: var(--bg-surface-hover);
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 0.8rem;
-        color: #475569;
+        color: var(--text-secondary);
         word-break: break-all;
+        transition: background-color var(--transition-slow), color var(--transition-slow);
     }
 }
 
 .cardFooter {
     padding: 1rem 1.5rem;
-    background: #f8fafc;
-    border-top: 1px solid $border-color;
+    background: var(--bg-surface-hover);
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
 
     .dblClickHint {
         font-size: 0.7rem;
-        color: #94a3b8;
+        color: var(--text-muted);
         font-style: italic;
         opacity: 0.7;
     }
@@ -226,14 +248,14 @@ $border-color: #e2e8f0;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: help; 
+    cursor: help;
 
     .infoIcon {
-        color: $primary-color;
+        color: var(--color-brand-primary);
         transition: color 0.2s;
 
         &:hover {
-            color: darken($primary-color, 15%);
+            color: var(--color-brand-primary-dark);
         }
     }
 
@@ -249,9 +271,9 @@ $border-color: #e2e8f0;
         padding: 12px;
         border-radius: 8px;
         font-size: 0.85rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-lg);
         z-index: 20;
-        pointer-events: none; 
+        pointer-events: none;
         transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         transform: translateY(10px);
         cursor: default;

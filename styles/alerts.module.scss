@@ -1,18 +1,7 @@
-$success-bg: #e6f9f0;
-$success-border: #2ecc71;
-$success-text: #155724;
-
-$error-bg: #fdf2f2;
-$error-border: #e74c3c;
-$error-text: #721c24;
-
-$warning-bg: #fff8e1;
-$warning-border: #f1c40f;
-$warning-text: #856404;
-
-$info-bg: #eaf4ff;
-$info-border: #3498db;
-$info-text: #0c5460;
+// ─────────────────────────────────────────────────────────────────────────────
+// Alert/Toast Styles
+// Uses CSS custom properties from theme.scss for dark mode support
+// ─────────────────────────────────────────────────────────────────────────────
 
 .alertContainer {
     position: fixed;
@@ -30,15 +19,16 @@ $info-text: #0c5460;
     position: relative;
     min-width: 320px;
     max-width: 400px;
-    background: #ffffff;
+    background: var(--bg-surface);
     border-radius: 8px;
     padding: 16px 20px 16px 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-lg);
     display: flex;
     align-items: flex-start;
     gap: 12px;
     overflow: hidden;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-family);
+    transition: background-color var(--transition-slow);
 
     border-left: 4px solid transparent;
 
@@ -51,50 +41,50 @@ $info-text: #0c5460;
     }
 
     &.success {
-        border-left-color: $success-border;
+        border-left-color: var(--alert-success-border);
 
         .icon {
-            color: $success-border;
+            color: var(--alert-success-border);
         }
 
         .title {
-            color: $success-text;
+            color: var(--alert-success-text);
         }
     }
 
     &.error {
-        border-left-color: $error-border;
+        border-left-color: var(--alert-error-border);
 
         .icon {
-            color: $error-border;
+            color: var(--alert-error-border);
         }
 
         .title {
-            color: $error-text;
+            color: var(--alert-error-text);
         }
     }
 
     &.warning {
-        border-left-color: $warning-border;
+        border-left-color: var(--alert-warning-border);
 
         .icon {
-            color: $warning-border;
+            color: var(--alert-warning-border);
         }
 
         .title {
-            color: $warning-text;
+            color: var(--alert-warning-text);
         }
     }
 
     &.info {
-        border-left-color: $info-border;
+        border-left-color: var(--alert-info-border);
 
         .icon {
-            color: $info-border;
+            color: var(--alert-info-border);
         }
 
         .title {
-            color: $info-text;
+            color: var(--alert-info-text);
         }
     }
 }
@@ -112,21 +102,22 @@ $info-text: #0c5460;
 
 .message {
     font-size: 0.85rem;
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.4;
+    transition: color var(--transition-slow);
 }
 
 .closeBtn {
     background: none;
     border: none;
-    color: #aaa;
+    color: var(--text-muted);
     cursor: pointer;
     padding: 0;
     margin-left: 8px;
     transition: color 0.2s;
 
     &:hover {
-        color: #333;
+        color: var(--text-primary);
     }
 }
 
@@ -135,7 +126,7 @@ $info-text: #0c5460;
     bottom: 0;
     left: 0;
     height: 3px;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--border-color);
     width: 100%;
 
     .progressFill {

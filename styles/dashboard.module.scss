@@ -1,11 +1,7 @@
-$success: #10b981;
-$error: #ef4444;
-$warning: #f59e0b;
-$text-main: #1e293b;
-$text-light: #64748b;
-$card-bg: #ffffff;
-$primary: #284999;
-$border-color: #e2e8f0;
+// ─────────────────────────────────────────────────────────────────────────────
+// Dashboard Styles
+// Uses CSS custom properties from theme.scss for dark mode support
+// ─────────────────────────────────────────────────────────────────────────────
 
 .dashboardHeader {
     display: flex;
@@ -17,29 +13,30 @@ $border-color: #e2e8f0;
 .dashboardTitle {
     font-size: 1.5rem;
     font-weight: 700;
-    color: $text-main;
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: color var(--transition-slow);
 }
 
 .refreshBtn {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: white;
-    border: 1px solid $border-color;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
     padding: 0.6rem 1rem;
     border-radius: 8px;
-    color: $text-main;
+    color: var(--text-primary);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover {
-        border-color: $primary;
-        color: $primary;
-        background: #f8fafc;
+        border-color: var(--color-brand-primary);
+        color: var(--color-brand-primary);
+        background: var(--bg-surface-hover);
     }
 
     &:disabled {
@@ -59,12 +56,12 @@ $border-color: #e2e8f0;
 }
 
 .processCard {
-    background: $card-bg;
+    background: var(--card-bg);
     border-radius: 12px;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-    transition: all 0.2s;
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s, background-color var(--transition-slow), border-color var(--transition-slow);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -72,8 +69,8 @@ $border-color: #e2e8f0;
 
     &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        border-color: $primary;
+        box-shadow: var(--shadow-lg);
+        border-color: var(--color-brand-primary);
     }
 
     &::before {
@@ -86,12 +83,12 @@ $border-color: #e2e8f0;
     }
 
     &.online::before {
-        background: $success;
+        background: var(--color-success);
     }
 
     &.errored::before,
     &.stopped::before {
-        background: $error;
+        background: var(--color-error);
     }
 }
 
@@ -101,23 +98,26 @@ $border-color: #e2e8f0;
     align-items: flex-start;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--border-color);
+    transition: border-color var(--transition-slow);
 
     .processName {
         h3 {
             font-size: 1.2rem;
             margin: 0;
-            color: $text-main;
+            color: var(--text-primary);
+            transition: color var(--transition-slow);
         }
 
         span {
             font-size: 0.8rem;
-            color: $text-light;
-            background: #f1f5f9;
+            color: var(--text-secondary);
+            background: var(--bg-surface-hover);
             padding: 2px 6px;
             border-radius: 4px;
             margin-top: 4px;
             display: inline-block;
+            transition: background-color var(--transition-slow), color var(--transition-slow);
         }
     }
 
@@ -129,13 +129,13 @@ $border-color: #e2e8f0;
         border-radius: 20px;
 
         &.online {
-            background: rgba($success, 0.1);
-            color: darken($success, 10%);
+            background: var(--badge-success-bg);
+            color: var(--badge-success-text);
         }
 
         &.offline {
-            background: rgba($error, 0.1);
-            color: darken($error, 10%);
+            background: var(--badge-error-bg);
+            color: var(--badge-error-text);
         }
     }
 }
@@ -153,18 +153,20 @@ $border-color: #e2e8f0;
 
     label {
         font-size: 0.75rem;
-        color: $text-light;
+        color: var(--text-muted);
         text-transform: uppercase;
         font-weight: 600;
         display: flex;
         align-items: center;
         gap: 4px;
+        transition: color var(--transition-slow);
     }
 
     strong {
         font-size: 1rem;
-        color: $text-main;
-        font-family: 'Inter', sans-serif;
+        color: var(--text-primary);
+        font-family: var(--font-family);
+        transition: color var(--transition-slow);
     }
 }
 
@@ -198,7 +200,8 @@ $border-color: #e2e8f0;
     gap: 8px;
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--border-color);
+    transition: border-color var(--transition-slow);
 
     button {
         display: flex;
@@ -217,30 +220,30 @@ $border-color: #e2e8f0;
         &:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            background-color: #cbd5e1 !important;
+            background-color: var(--text-muted) !important;
         }
 
         &.btnStart {
-            background-color: $success;
+            background-color: var(--color-success);
 
             &:hover:not(:disabled) {
-                background-color: darken($success, 10%);
+                background-color: #059669;
             }
         }
 
         &.btnStop {
-            background-color: $error;
+            background-color: var(--color-error);
 
             &:hover:not(:disabled) {
-                background-color: darken($error, 10%);
+                background-color: #dc2626;
             }
         }
 
         &.btnRestart {
-            background-color: $primary;
+            background-color: var(--color-brand-primary);
 
             &:hover:not(:disabled) {
-                background-color: darken($primary, 10%);
+                background-color: var(--color-brand-primary-dark);
             }
         }
     }

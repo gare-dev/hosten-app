@@ -1,11 +1,28 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Legacy SCSS Variables
+// These are kept for backward compatibility. New code should use CSS custom
+// properties from theme.scss instead.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Brand colors (use var(--color-brand-primary) instead)
 $primary-color: #284999;
 $primary-hover: #1e3a7a;
+
+// Text (use var(--text-primary) instead)
 $text-color: #333333;
+
+// Backgrounds (use var(--bg-body), var(--bg-surface) instead)
 $bg-color: #f4f7fa;
 $white: #ffffff;
+
+// Inputs (use var(--input-bg), var(--input-border) instead)
 $input-bg: #f9f9f9;
 $input-border: #e0e0e0;
+
+// Shadows (use var(--shadow-sm), var(--shadow-lg) instead)
 $shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
 $shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+// Layout
 $radius: 12px;
 $transition: all 0.3s ease;

@@ -5,6 +5,7 @@ import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu } from 'lucide-rea
 import { dehydrate, useQuery, QueryClient } from '@tanstack/react-query';
 import { serverService } from '@/services/server-service';
 import { useAlert } from '@/context/alert-context';
+import { ThemeToggle } from '@/context/theme-context';
 import { useRouter } from 'next/router';
 
 const formatBytes = (bytes: number) => {
@@ -36,7 +37,8 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            dehydratedState: dehydrate(queryClient)
+            // Serialize to JSON to handle Date objects
+            dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient)))
         }
     };
 }
@@ -76,6 +78,7 @@ export default function ServersPage() {
                 </div>
 
                 <div className={styles.controls}>
+                    <ThemeToggle className={styles.themeToggle} />
                     <span className={styles.lastUpdate}>
                         Updated {secondsAgo} seconds ago
                     </span>

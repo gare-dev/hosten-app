@@ -1,4 +1,70 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Hosten Global Styles
+ * Theme is now managed via theme.scss which is imported in _app.tsx
+ * ───────────────────────────────────────────────────────────────────────────── */
+
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-family, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    background-color: var(--bg-body, #0a0f1a);
+    color: var(--text-primary, #ffffff);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track, #1a2332);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb, #3b4a5a);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover, #4b5c6b);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb, #3b4a5a) var(--scrollbar-track, #1a2332);
+}
+
+/* Selection */
+::selection {
+    background-color: var(--color-brand-primary, #284999);
+    color: white;
+}
+
+/* Focus visible */
+:focus-visible {
+    outline: 2px solid var(--color-brand-primary, #284999);
+    outline-offset: 2px;
+}
+
+/* Links */
+a {
+    color: var(--color-brand-primary-light, #3b5cb8);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+a:hover {
+    color: var(--color-brand-primary, #284999);
 }

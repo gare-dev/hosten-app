@@ -1,10 +1,7 @@
-$primary-color: #284999;
-$primary-hover: darken($primary-color, 10%);
-$text-main: #1e293b;
-$text-light: #64748b;
-$bg-white: #ffffff;
-$border-color: #e2e8f0;
-$danger-color: #ef4444;
+// ─────────────────────────────────────────────────────────────────────────────
+// Resources Page Styles
+// Uses CSS custom properties from theme.scss for dark mode support
+// ─────────────────────────────────────────────────────────────────────────────
 
 .container {
     display: flex;
@@ -19,27 +16,30 @@ $danger-color: #ef4444;
 
 .listSection {
     flex: 2;
-    background: $bg-white;
+    background: var(--card-bg);
     border-radius: 12px;
-    border: 1px solid $border-color;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
     overflow: hidden;
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
 
     .header {
         padding: 1.5rem;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid var(--border-color);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        transition: border-color var(--transition-slow);
 
         h2 {
             font-size: 1.1rem;
-            color: $text-main;
+            color: var(--text-primary);
             font-weight: 700;
             margin: 0;
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: color var(--transition-slow);
         }
     }
 }
@@ -57,22 +57,24 @@ $danger-color: #ef4444;
     th {
         text-align: left;
         padding: 1rem 1.5rem;
-        color: $text-light;
+        color: var(--text-muted);
         font-weight: 600;
         font-size: 0.8rem;
         text-transform: uppercase;
-        background: #f8fafc;
-        border-bottom: 1px solid $border-color;
+        background: var(--table-header-bg);
+        border-bottom: 1px solid var(--border-color);
+        transition: background-color var(--transition-slow), color var(--transition-slow), border-color var(--transition-slow);
     }
 
     td {
         padding: 1rem 1.5rem;
-        color: $text-main;
-        border-bottom: 1px solid $border-color;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
         vertical-align: middle;
+        transition: background-color var(--transition-base), color var(--transition-slow), border-color var(--transition-slow);
 
         &.actionsColumn {
-            max-width: 300px; // Limita largura para quebrar linha se tiver muitas actions
+            max-width: 300px;
         }
 
         &.actions {
@@ -85,7 +87,7 @@ $danger-color: #ef4444;
     }
 
     tr:hover td {
-        background-color: #f8fafc;
+        background-color: var(--table-row-hover);
     }
 }
 
@@ -94,13 +96,13 @@ $danger-color: #ef4444;
     transition: background-color 0.15s;
 
     &:hover td {
-        background-color: #f1f5f9;
+        background-color: var(--table-row-hover);
     }
 }
 
 .expandCell {
     width: 40px;
-    color: $text-light;
+    color: var(--text-muted);
 
     svg {
         transition: transform 0.2s;
@@ -108,8 +110,8 @@ $danger-color: #ef4444;
 }
 
 .countBadge {
-    background: #e0e7ff;
-    color: #4338ca;
+    background: var(--badge-info-bg);
+    color: var(--badge-info-text);
     padding: 4px 10px;
     border-radius: 12px;
     font-size: 0.8rem;
@@ -117,15 +119,16 @@ $danger-color: #ef4444;
 }
 
 .actionDetailRow {
-    background-color: #fafbfc;
+    background-color: var(--bg-surface-hover);
+    transition: background-color var(--transition-slow);
 
     td {
         padding: 0.75rem 1.5rem;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid var(--border-color);
     }
 
     &:hover td {
-        background-color: #f1f5f9;
+        background-color: var(--table-row-hover);
     }
 }
 
@@ -147,11 +150,11 @@ $danger-color: #ef4444;
     align-items: center;
     gap: 6px;
     padding: 6px 10px;
-    background: #f8fafc;
-    border: 1px solid $border-color;
+    background: var(--bg-surface-hover);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     font-size: 0.8rem;
-    color: $text-light;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s;
     max-width: 200px;
@@ -164,8 +167,8 @@ $danger-color: #ef4444;
     }
 
     &:hover {
-        border-color: $primary-color;
-        background: white;
+        border-color: var(--color-brand-primary);
+        background: var(--bg-surface);
     }
 }
 
@@ -177,12 +180,13 @@ $danger-color: #ef4444;
     min-width: 180px;
     max-height: 200px;
     overflow-y: auto;
-    background: white;
-    border: 1px solid $border-color;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
     margin-top: 4px;
     padding: 6px 0;
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
 }
 
 .roleOption {
@@ -192,17 +196,17 @@ $danger-color: #ef4444;
     padding: 8px 12px;
     cursor: pointer;
     font-size: 0.85rem;
-    color: $text-main;
+    color: var(--text-primary);
     transition: background-color 0.15s;
 
     &:hover {
-        background-color: #f1f5f9;
+        background-color: var(--table-row-hover);
     }
 
     input[type="checkbox"] {
         width: 16px;
         height: 16px;
-        accent-color: $primary-color;
+        accent-color: var(--color-brand-primary);
         cursor: pointer;
     }
 }
@@ -210,7 +214,7 @@ $danger-color: #ef4444;
 .noRoles {
     padding: 12px;
     text-align: center;
-    color: $text-light;
+    color: var(--text-muted);
     font-size: 0.85rem;
 }
 
@@ -221,47 +225,50 @@ $danger-color: #ef4444;
 }
 
 .actionBadge {
-    background: #f1f5f9;
-    color: $text-light;
+    background: var(--bg-surface-hover);
+    color: var(--text-secondary);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.75rem;
     font-family: monospace;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-slow), color var(--transition-slow), border-color var(--transition-slow);
 }
 
 .deleteBtn {
     background: transparent;
     border: none;
-    color: #94a3b8;
+    color: var(--text-muted);
     cursor: pointer;
     padding: 6px;
     border-radius: 6px;
     transition: all 0.2s;
 
     &:hover {
-        background: #fee2e2;
-        color: $danger-color;
+        background: var(--badge-error-bg);
+        color: var(--color-error);
     }
 }
 
 .createSection {
     flex: 1;
     min-width: 320px;
-    background: $bg-white;
+    background: var(--card-bg);
     border-radius: 12px;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     padding: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--card-shadow);
     position: sticky;
     top: 90px;
+    transition: background-color var(--transition-slow), border-color var(--transition-slow);
 
     h3 {
         font-size: 1rem;
         margin: 0 0 1rem 0;
-        color: $text-main;
-        border-bottom: 1px solid $border-color;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
         padding-bottom: 1rem;
+        transition: color var(--transition-slow), border-color var(--transition-slow);
     }
 }
 
@@ -272,24 +279,26 @@ $danger-color: #ef4444;
         display: block;
         font-size: 0.85rem;
         font-weight: 600;
-        color: $text-main;
+        color: var(--text-primary);
         margin-bottom: 0.5rem;
+        transition: color var(--transition-slow);
     }
 
     input[type="text"] {
         width: 100%;
         padding: 0.75rem 1rem;
-        border: 1px solid $border-color;
+        border: 1px solid var(--input-border);
         border-radius: 8px;
         font-size: 0.95rem;
         outline: none;
-        transition: all 0.2s;
-        background: #fcfcfc;
+        transition: all 0.2s, background-color var(--transition-slow), border-color var(--transition-slow);
+        background: var(--input-bg);
+        color: var(--text-primary);
 
         &:focus {
-            border-color: $primary-color;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+            border-color: var(--color-brand-primary);
+            background: var(--bg-surface);
+            box-shadow: var(--shadow-focus);
         }
     }
 }
@@ -306,24 +315,24 @@ $danger-color: #ef4444;
     align-items: center;
     justify-content: center;
     padding: 8px;
-    border: 1px solid $border-color;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.85rem;
-    color: $text-light;
+    color: var(--text-secondary);
     transition: all 0.2s;
-    background: white;
+    background: var(--bg-surface);
     user-select: none;
 
     &:hover {
-        border-color: $primary-color;
-        background: #f8fafc;
+        border-color: var(--color-brand-primary);
+        background: var(--bg-surface-hover);
     }
 
     &.selected {
-        background: rgba($primary-color, 0.1);
-        border-color: $primary-color;
-        color: $primary-color;
+        background: rgba(40, 73, 153, 0.15);
+        border-color: var(--color-brand-primary);
+        color: var(--color-brand-primary-light);
         font-weight: 600;
     }
 }
@@ -331,7 +340,7 @@ $danger-color: #ef4444;
 .submitBtn {
     width: 100%;
     padding: 0.85rem;
-    background: $primary-color;
+    background: var(--color-brand-primary);
     color: white;
     border: none;
     border-radius: 8px;
@@ -345,7 +354,7 @@ $danger-color: #ef4444;
     margin-top: 1rem;
 
     &:hover {
-        background: $primary-hover;
+        background: var(--color-brand-primary-dark);
     }
 
     &:disabled {
@@ -361,8 +370,9 @@ $danger-color: #ef4444;
 .emptyState {
     padding: 3rem;
     text-align: center;
-    color: $text-light;
+    color: var(--text-muted);
     font-size: 0.9rem;
+    transition: color var(--transition-slow);
 }
 
 @keyframes spin {

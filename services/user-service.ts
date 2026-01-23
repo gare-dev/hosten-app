@@ -4,7 +4,6 @@ import { User } from "@/types/user";
 const userService = () => {
     const fetchUsers = async (): Promise<User[]> => {
         const response = await Api.getUsers();
-        console.log(response.data.data)
         return response.data.data;
     };
 

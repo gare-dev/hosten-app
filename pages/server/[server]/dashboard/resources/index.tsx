@@ -102,7 +102,6 @@ export default function ResourcesPage() {
     const { mutate: insertResource, isPending } = useMutation({
         mutationFn: resourceService().insertResource,
         onSuccess: (data) => {
-            console.log(data)
             showAlert('success', `Resource created successfully.`);
             setResName('');
             setSelectedActions([]);
