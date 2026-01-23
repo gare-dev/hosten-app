@@ -1,6 +1,6 @@
 export interface ServerMetrics {
-    uptime: number; // em segundos
-    memory: number; // em bytes
+    uptime: number;
+    memory: number;
     timestamp: number;
 }
 
@@ -9,10 +9,9 @@ export interface Server {
     environment: 'testing' | 'production' | 'staging' | 'development';
     host: string;
     clientId: string;
-    // A API retorna string "true"/"false", mas o ideal seria boolean.
-    // Vamos tipar como string conforme o JSON fornecido.
+
     connected: boolean;
-    lastSeenAt?: string; // Opcional, pois pode não vir se não estiver conectado (embora o JSON de erro não mostre, é bom prevenir)
+    lastSeenAt?: string;
     metrics?: ServerMetrics;
 }
 

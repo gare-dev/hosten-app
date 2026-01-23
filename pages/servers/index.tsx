@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Server } from '@/types/server-type';
 import styles from '@/styles/server.module.scss';
-import { Server as ServerIcon, Info, Activity, Clock, RefreshCw, Cpu } from 'lucide-react';
+import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu } from 'lucide-react';
 import { dehydrate, useQuery, QueryClient } from '@tanstack/react-query';
 import { serverService } from '@/services/server-service';
+import { useAlert } from '@/context/alert-context';
+import { useRouter } from 'next/router';
 
 const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 B';
@@ -21,7 +23,7 @@ const formatUptime = (seconds: number) => {
 
 const formatDate = (dateString?: string) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleTimeString('pt-BR');
+    return new Date(dateString).toLocaleTimeString('en-US');
 };
 
 export async function getServerSideProps() {
@@ -41,6 +43,8 @@ export async function getServerSideProps() {
 
 export default function ServersPage() {
     const [secondsAgo, setSecondsAgo] = useState(0);
+    const { showAlert } = useAlert();
+    const router = useRouter()
 
     const { data, isLoading, refetch, dataUpdatedAt } = useQuery({
         queryKey: ['servers'],
@@ -59,8 +63,8 @@ export default function ServersPage() {
     }, [dataUpdatedAt]);
 
     const handleServerDoubleClick = (server: Server) => {
-        console.log(`Redirecting to server: ${server.name} (${server.clientId})`);
-        alert(`Redirecting to dashboard of: ${server.name}`);
+        showAlert('info', `Connecting to server: ${server.name} (${server.clientId})`);
+        router.push(`/server/${server.clientId}/dashboard`);
     };
 
     return (
@@ -97,7 +101,6 @@ export default function ServersPage() {
                             onDoubleClick={() => handleServerDoubleClick(server)}
                             title="Double-click to manage this server"
                         >
-                            {/* Card Header */}
                             <div className={styles.cardHeader}>
                                 <div className={styles.nameWrapper}>
                                     <h2>{server.name}</h2>
@@ -110,7 +113,6 @@ export default function ServersPage() {
                                 </span>
                             </div>
 
-                            {/* Card Body */}
                             <div className={styles.cardBody}>
                                 <div className={styles.infoRow}>
                                     <ServerIcon size={16} />
@@ -119,17 +121,15 @@ export default function ServersPage() {
                                 <div className={styles.clientId}>{server.clientId}</div>
                             </div>
 
-                            {/* Footer with Info Icon (Tooltip) and Hint */}
                             <div className={styles.cardFooter}>
                                 <span className={styles.dblClickHint}>Double-click to connect</span>
 
                                 <div
                                     className={styles.tooltipWrapper}
-                                    onClick={(e) => e.stopPropagation()} // Prevents clicking the (i) from triggering the card
+                                    onClick={(e) => e.stopPropagation()}
                                 >
                                     <Info className={styles.infoIcon} size={20} />
 
-                                    {/* Tooltip Content */}
                                     <div className={styles.tooltipContent}>
                                         <h4>Telemetry</h4>
                                         <ul>

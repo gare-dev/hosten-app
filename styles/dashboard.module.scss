@@ -76,7 +76,6 @@ $border-color: #e2e8f0;
         border-color: $primary;
     }
 
-    // Faixa lateral de status
     &::before {
         content: '';
         position: absolute;
@@ -170,7 +169,7 @@ $border-color: #e2e8f0;
 }
 
 .logsSection {
-    margin-top: auto; // Empurra para baixo se sobrar espaço
+    margin-top: auto;
     margin-bottom: 1rem;
     background: #0f172a;
     border-radius: 6px;
@@ -193,7 +192,6 @@ $border-color: #e2e8f0;
     }
 }
 
-// === BOTÕES DE AÇÃO ===
 .actions {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -219,7 +217,7 @@ $border-color: #e2e8f0;
         &:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            background-color: #cbd5e1 !important; // Cinza desativado
+            background-color: #cbd5e1 !important;
         }
 
         &.btnStart {
@@ -239,7 +237,7 @@ $border-color: #e2e8f0;
         }
 
         &.btnRestart {
-            background-color: $primary; // Azul
+            background-color: $primary;
 
             &:hover:not(:disabled) {
                 background-color: darken($primary, 10%);

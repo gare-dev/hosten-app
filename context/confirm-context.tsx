@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState, useRef, useCallback, ReactN
 import { AlertTriangle, Info } from 'lucide-react';
 import styles from '@/styles/confirmmodal.module.scss';
 
-// Tipos
 type ConfirmVariant = 'danger' | 'info';
 
 interface ConfirmOptions {
@@ -27,17 +26,17 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
         title: '',
         message: '',
         variant: 'danger',
-        confirmText: 'Confirmar',
-        cancelText: 'Cancelar',
+        confirmText: 'Confirm',
+        cancelText: 'Cancel',
     });
 
     const resolveRef = useRef<(value: boolean) => void>(() => { });
 
     const confirm = useCallback((opts: ConfirmOptions) => {
         setOptions({
-            variant: 'danger', // Default
-            confirmText: 'Confirmar',
-            cancelText: 'Cancelar',
+            variant: 'danger',
+            confirmText: 'Confirm',
+            cancelText: 'Cancel',
             ...opts,
         });
         setIsOpen(true);
@@ -61,12 +60,11 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
         <ConfirmContext.Provider value={{ confirm }}>
             {children}
 
-            {/* Renderização do Modal */}
             {isOpen && (
                 <div className={styles.overlay} onClick={handleCancel}>
                     <div
                         className={styles.modal}
-                        onClick={(e) => e.stopPropagation()} // Impede fechar ao clicar dentro
+                        onClick={(e) => e.stopPropagation()}
                         role="dialog"
                     >
                         <div className={styles.header}>
@@ -87,7 +85,7 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
                             <button
                                 className={`${styles.btn} ${styles.btnConfirm} ${styles[options.variant!]}`}
                                 onClick={handleConfirm}
-                                autoFocus // Foca no botão de confirmar para acessibilidade (ou cancele se preferir segurança)
+                                autoFocus
                             >
                                 {options.confirmText}
                             </button>

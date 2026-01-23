@@ -1,7 +1,7 @@
 'use client';
 
 import React, { use, useState } from 'react';
-import ServerLayout from '@/components/Layout/ServerLayout'; // Ajuste o caminho se necessário
+import ServerLayout from '@/components/Layout/ServerLayout';
 import styles from '@/styles/roles.module.scss';
 import { Shield, Plus, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/router';
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             queryFn: () => roleService().fetchRoles(),
         });
     } catch (error) {
-        console.error('Erro ao buscar processos:', error);
+        console.error('Error fetching processes:', error);
     }
 
     return {
@@ -90,10 +90,10 @@ export default function RolesPage() {
 
     const handleDeleteRole = async (id: string) => {
         const isConfirmed = await confirm({
-            title: 'Confirmar Exclusão',
-            message: 'Tem certeza que deseja excluir este cargo?',
-            confirmText: 'Excluir',
-            cancelText: 'Cancelar',
+            title: 'Confirm Deletion',
+            message: 'Are you sure you want to delete this role?',
+            confirmText: 'Delete',
+            cancelText: 'Cancel',
             variant: 'danger'
         })
         if (isConfirmed) {
@@ -112,7 +112,7 @@ export default function RolesPage() {
                     <div className={styles.header}>
                         <h2>
                             <Shield size={20} color="#284999" />
-                            Roles Existentes
+                            Existing Roles
                         </h2>
                         <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
                             Total: {rolesData?.length ?? 0}
@@ -124,9 +124,9 @@ export default function RolesPage() {
                             <table className={styles.roleTable}>
                                 <thead>
                                     <tr>
-                                        <th>Nome do Cargo</th>
+                                        <th>Role Name</th>
 
-                                        <th style={{ textAlign: 'right' }}>Ações</th>
+                                        <th style={{ textAlign: 'right' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -139,7 +139,7 @@ export default function RolesPage() {
                                                 <button
                                                     className={styles.deleteBtn}
                                                     onClick={() => handleDeleteRole(role.id)}
-                                                    title="Excluir Role"
+                                                    title="Delete Role"
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
@@ -150,21 +150,19 @@ export default function RolesPage() {
                             </table>
                         ) : (
                             <div className={styles.emptyState}>
-                                Nenhum cargo encontrado. Crie o primeiro ao lado.
+                                No roles found. Create the first one on the side.
                             </div>
                         )}
                     </div>
                 </section>
 
-                {/* === COLUNA DIREITA: CRIAÇÃO === */}
                 <aside className={styles.createSection}>
-                    <h3>Criar Novo Role</h3>
+                    <h3>Create New Role</h3>
 
                     <form onSubmit={handleCreateRole}>
                         <div className={styles.formGroup}>
-                            <label htmlFor="roleName">Nome do Cargo</label>
+                            <label htmlFor="roleName">Role Name</label>
                             <input
-                                style={{ width: '90%' }}
                                 type="text"
                                 id="roleName"
                                 placeholder="Ex: admin"
@@ -173,7 +171,7 @@ export default function RolesPage() {
                                 autoComplete="off"
                             />
                             <small style={{ display: 'block', marginTop: 6, color: '#94a3b8', fontSize: '0.75rem' }}>
-                                Use nomes descritivos. As permissões serão configuradas na próxima etapa.
+                                Use descriptive names. Permissions will be configured in the next step.
                             </small>
                         </div>
 
@@ -183,10 +181,10 @@ export default function RolesPage() {
                             disabled={loading || !newRoleName.trim()}
                         >
                             {loading ? (
-                                'Criando...'
+                                'Creating...'
                             ) : (
                                 <>
-                                    <Plus size={18} /> Adicionar Role
+                                    <Plus size={18} /> Add Role
                                 </>
                             )}
                         </button>

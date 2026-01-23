@@ -10,8 +10,8 @@ $bg-white: #ffffff;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4); // Escurecimento suave
-    backdrop-filter: blur(4px); // Efeito moderno "glass"
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
     z-index: 99999;
     display: flex;
     align-items: center;
@@ -26,10 +26,10 @@ $bg-white: #ffffff;
     padding: 1.5rem;
     border-radius: 16px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    font-family: 'Inter', sans-serif; // Forçando a fonte do projeto
+    font-family: 'Inter', sans-serif;
     transform: scale(0.95);
     opacity: 0;
-    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; // Animação "pop" elegante
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     display: flex;
     flex-direction: column;
     gap: 1rem;

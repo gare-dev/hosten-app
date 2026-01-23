@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 import styles from '@/styles/alerts.module.scss';
 
@@ -20,6 +20,24 @@ interface AlertContextData {
 }
 
 const AlertContext = createContext<AlertContextData>({} as AlertContextData);
+
+let globalShowAlert: AlertContextData['showAlert'] | null = null;
+
+const PENDING_ALERT_KEY = 'pendingAlert';
+
+export const showAlertGlobal = (type: AlertType, message: string, title?: string, duration?: number) => {
+    if (globalShowAlert) {
+        globalShowAlert(type, message, title, duration);
+    } else {
+        console.warn('AlertProvider is not mounted yet');
+    }
+};
+
+export const showAlertAfterRedirect = (type: AlertType, message: string, title?: string, duration?: number) => {
+    if (typeof window !== 'undefined') {
+        sessionStorage.setItem(PENDING_ALERT_KEY, JSON.stringify({ type, message, title, duration }));
+    }
+};
 
 export const AlertProvider = ({ children }: { children: ReactNode }) => {
     const [alerts, setAlerts] = useState<Alert[]>([]);
@@ -67,6 +85,24 @@ export const AlertProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [removeAlert]);
 
+    useEffect(() => {
+        globalShowAlert = showAlert;
+
+        const pendingAlert = sessionStorage.getItem(PENDING_ALERT_KEY);
+        if (pendingAlert) {
+            try {
+                const { type, message, title, duration } = JSON.parse(pendingAlert);
+                showAlert(type, message, title, duration);
+                sessionStorage.removeItem(PENDING_ALERT_KEY);
+            } catch (e) {
+                console.error('Error processing pending alert:', e);
+            }
+        }
+
+        return () => {
+            globalShowAlert = null;
+        };
+    }, [showAlert]);
     return (
         <AlertContext.Provider value={{ showAlert }}>
             {children}

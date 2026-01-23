@@ -32,8 +32,7 @@ export default function ServerDashboard() {
     const queryClient = useQueryClient();
     const { setServer } = useServer()
 
-    // Aqui você pode obter o serverName do contexto ou de outra fonte
-    const serverName = "gare-server"; // TODO: obter dinamicamente
+    const serverName = "gare-server";
 
     const { data: processes, isLoading, isFetching } = useQuery({
         queryKey: ['processes', clientId],
@@ -71,7 +70,7 @@ export default function ServerDashboard() {
             }
             queryClient.invalidateQueries({ queryKey: ['processes', clientId] });
         } catch (error) {
-            console.error(`Erro ao executar ${action}:`, error);
+            console.error(`Error executing ${action}:`, error);
         }
     };
 
@@ -83,7 +82,7 @@ export default function ServerDashboard() {
             <div className={styles.dashboardHeader}>
                 <div className={styles.dashboardTitle}>
                     <Activity color="#284999" />
-                    Visão Geral de Processos (PM2)
+                    Process Overview (PM2)
                 </div>
 
                 <button
@@ -92,7 +91,7 @@ export default function ServerDashboard() {
                     disabled={loading}
                 >
                     <RefreshCw size={18} />
-                    {loading ? 'Atualizando...' : 'Atualizar Lista'}
+                    {loading ? 'Updating...' : 'Refresh List'}
                 </button>
             </div>
             <div className={styles.processGrid}>
@@ -104,7 +103,6 @@ export default function ServerDashboard() {
                             key={proc.pmId}
                             className={`${styles.processCard} ${isOnline ? styles.online : styles.stopped}`}
                         >
-                            {/* Header do Card */}
                             <div className={styles.cardHeader}>
                                 <div className={styles.processName}>
                                     <h3>{proc.name}</h3>
@@ -115,7 +113,6 @@ export default function ServerDashboard() {
                                 </div>
                             </div>
 
-                            {/* Grid de Estatísticas */}
                             <div className={styles.statsGrid}>
                                 <div className={styles.statItem}>
                                     <label><Clock size={14} /> Uptime</label>
@@ -133,17 +130,15 @@ export default function ServerDashboard() {
                                 </div>
 
                                 <div className={styles.statItem}>
-                                    <label><HardDrive size={14} /> Memória</label>
+                                    <label><HardDrive size={14} /> Memory</label>
                                     <strong>{formatMemory(proc.memory)}</strong>
                                 </div>
                             </div>
 
-                            {/* Detalhes Técnicos (Versão / Logs) */}
                             <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '10px' }}>
                                 <strong>Node:</strong> {proc.nodeVersion} • <strong>Mode:</strong> {proc.execMode}
                             </div>
 
-                            {/* Logs Preview */}
                             <div className={styles.logsSection}>
                                 <div className={styles.logPath} title={proc.logs.out}>
                                     <span>OUT:</span> {proc.logs.out.split('\\').pop()}
@@ -153,7 +148,6 @@ export default function ServerDashboard() {
                                 </div>
                             </div>
 
-                            {/* BOTÕES DE AÇÃO */}
                             <div className={styles.actions}>
                                 <button
                                     className={styles.btnStart}
@@ -188,12 +182,10 @@ export default function ServerDashboard() {
     );
 }
 
-// Server Side Rendering com TanStack Query
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { server: clientId } = context.params as { server: string };
     const queryClient = new QueryClient();
 
-    // Passa o cookie da request para a API (autenticação)
     const cookie = context.req.headers.cookie ?? '';
     Api.setCookie(cookie);
 
@@ -203,7 +195,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             queryFn: () => fetchProcesses(clientId),
         });
     } catch (error) {
-        console.error('Erro ao buscar processos:', error);
+        console.error('Error fetching processes:', error);
     }
 
     return {
