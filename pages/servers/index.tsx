@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Server } from '@/types/server-type';
 import styles from '@/styles/server.module.scss';
-import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu, Plus } from 'lucide-react';
-import { dehydrate, useQuery, QueryClient } from '@tanstack/react-query';
+import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu, Plus, LogOut } from 'lucide-react';
+import { dehydrate, useQuery, useQueryClient, QueryClient } from '@tanstack/react-query';
 import { serverService } from '@/services/server-service';
 import { useAlert } from '@/context/alert-context';
 import { ThemeToggle } from '@/context/theme-context';
 import { useRouter } from 'next/router';
 import { AddServerModal } from '@/components/AddServerModal/AddServerModal';
+import Api from '@/api';
+import { useConfirm } from '@/context/confirm-context';
 
 const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 B';
@@ -38,7 +40,6 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            // Serialize to JSON to handle Date objects
             dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient)))
         }
     };
@@ -49,6 +50,8 @@ export default function ServersPage() {
     const [isAddServerOpen, setIsAddServerOpen] = useState(false);
     const { showAlert } = useAlert();
     const router = useRouter()
+    const { confirm } = useConfirm()
+    const queryClient = useQueryClient()
 
     const { data, isLoading, refetch, dataUpdatedAt } = useQuery({
         queryKey: ['servers'],
@@ -71,6 +74,24 @@ export default function ServersPage() {
         router.push(`/server/${server.clientId}/dashboard`);
     };
 
+    const handleLogout = async () => {
+        const confirmLogout = await confirm({
+            message: 'Are you sure you want to log out?',
+            title: 'Logout Confirmation',
+            confirmText: 'Log out',
+            cancelText: 'Cancel'
+        })
+
+        if (confirmLogout) {
+            const response = await Api.logout()
+            queryClient.clear();
+
+            if (response.status === 200) {
+                router.push('/');
+            }
+        }
+    };
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
@@ -87,10 +108,6 @@ export default function ServersPage() {
                         <Plus size={18} />
                         Add Server
                     </button>
-                    <ThemeToggle className={styles.themeToggle} />
-                    <span className={styles.lastUpdate}>
-                        Updated {secondsAgo} seconds ago
-                    </span>
                     <button
                         className={`${styles.refreshBtn} ${isLoading ? styles.loading : ''}`}
                         onClick={() => refetch()}
@@ -99,6 +116,14 @@ export default function ServersPage() {
                         <RefreshCw size={18} />
                         {isLoading ? 'Updating...' : 'Refresh'}
                     </button>
+                    <button onClick={handleLogout} className={styles.logoffBtn}>
+                        <LogOut size={18} /> <span>Log out</span>
+                    </button>
+
+                    <span className={styles.lastUpdate}>
+                        Updated {secondsAgo} seconds ago
+                    </span>
+                    <ThemeToggle className={styles.themeToggle} />
                 </div>
             </header>
 
@@ -175,8 +200,6 @@ export default function ServersPage() {
                     );
                 })}
             </div>
-
-            {/* Add Server Modal */}
             <AddServerModal
                 isOpen={isAddServerOpen}
                 onClose={() => setIsAddServerOpen(false)}

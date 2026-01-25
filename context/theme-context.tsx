@@ -190,7 +190,6 @@ interface ThemeToggleProps {
 export function ThemeToggle({ className }: ThemeToggleProps) {
     const { resolvedTheme, toggleTheme, mounted } = useTheme();
 
-    // Prevent hydration mismatch
     if (!mounted) {
         return (
             <button

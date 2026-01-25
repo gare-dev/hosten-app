@@ -201,9 +201,11 @@ export default function LandingPage() {
           <div className={styles.heroVisual}>
             <div className={styles.dashboardPreview}>
               <div className={styles.previewHeader}>
-                <span className={`${styles.dot} ${styles.red}`}></span>
-                <span className={`${styles.dot} ${styles.yellow}`}></span>
-                <span className={`${styles.dot} ${styles.green}`}></span>
+                <div className={styles.windowControls}>
+                  <span className={`${styles.dot} ${styles.red}`}></span>
+                  <span className={`${styles.dot} ${styles.yellow}`}></span>
+                  <span className={`${styles.dot} ${styles.green}`}></span>
+                </div>
                 <span>hosten.app/dashboard</span>
               </div>
               <div className={styles.previewContent}>
@@ -427,9 +429,12 @@ export default function LandingPage() {
             <div className={`${styles.capabilitiesVisual} ${styles.animateRight} ${capabilitiesAnim.isVisible ? styles.visible : ''}`}>
               <div className={styles.terminalWindow}>
                 <div className={styles.terminalHeader}>
-                  <span className={`${styles.dot} ${styles.red}`}></span>
-                  <span className={`${styles.dot} ${styles.yellow}`}></span>
-                  <span className={`${styles.dot} ${styles.green}`}></span>
+                  <div className={styles.windowControls}>
+                    <span className={`${styles.dot} ${styles.red}`}></span>
+                    <span className={`${styles.dot} ${styles.yellow}`}></span>
+                    <span className={`${styles.dot} ${styles.green}`}></span>
+
+                  </div>
                   <span>hosten-cli</span>
                 </div>
                 <div className={styles.terminalBody}>
@@ -441,7 +446,7 @@ export default function LandingPage() {
                     <span className={styles.output}>┌─────────────┬────────┬─────────┐</span>
                   </div>
                   <div className={styles.line}>
-                    <span className={styles.output}>│ Server      │ Status │ Procs   │</span>
+                    <span className={styles.output}>│ Server         │ Status │ Procs   │</span>
                   </div>
                   <div className={styles.line}>
                     <span className={styles.output}>├─────────────┼────────┼─────────┤</span>
