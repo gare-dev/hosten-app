@@ -3,36 +3,29 @@
 import React, { useState } from 'react';
 import {
     LogOut,
-    Server,
-    SquareX,
     Menu,
-    X
+    X,
+    Users
 } from 'lucide-react';
-import styles from '@/styles/serverlayout.module.scss';
+import styles from '@/styles/teamlayout.module.scss';
 import { useRouter } from 'next/router';
 import { useConfirm } from '@/context/confirm-context';
 import { ThemeToggle } from '@/context/theme-context';
 import { Sidebar } from '@/components/Sidebar';
+import { useTeam } from '@/context/team-context';
 import Api from '@/api';
 import { useQueryClient } from '@tanstack/react-query';
 
-interface ServerLayoutProps {
+interface TeamLayoutProps {
     children: React.ReactNode;
-    serverName?: string;
-    clientId?: string;
 }
 
-export default function ServerLayout({ children, serverName = "Unknown Server", clientId = "..." }: ServerLayoutProps) {
+export default function TeamLayout({ children }: TeamLayoutProps) {
     const router = useRouter();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { confirm } = useConfirm();
     const queryClient = useQueryClient();
-
-    const { server: clientIdFromQuery } = router.query as { server: string };
-
-    const handleLogoff = () => {
-        router.push('/servers');
-    };
+    const { currentTeam, isLoadingTeam } = useTeam();
 
     const handleLogout = async () => {
         const confirmLogout = await confirm({
@@ -65,8 +58,7 @@ export default function ServerLayout({ children, serverName = "Unknown Server", 
 
             <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
                 <Sidebar
-                    variant="server"
-                    clientId={clientIdFromQuery || clientId}
+                    variant="team"
                     onClose={closeSidebar}
                 />
             </aside>
@@ -80,16 +72,21 @@ export default function ServerLayout({ children, serverName = "Unknown Server", 
                         >
                             {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
-                        <div className={styles.serverInfo}>
-                            <h2>{serverName}</h2>
-                            <span>ID: {clientId}</span>
+                        <div className={styles.teamInfo}>
+                            <h2>
+                                <Users size={20} style={{ marginRight: 8 }} />
+                                {isLoadingTeam ? 'Loading...' : currentTeam?.name || 'No Team Selected'}
+                            </h2>
+                            {currentTeam?.description && (
+                                <span>{currentTeam.description}</span>
+                            )}
                         </div>
                     </div>
 
                     <div className={styles.headerActions}>
                         <ThemeToggle className={styles.themeToggle} />
-                        <button onClick={handleLogoff} className={styles.logoffBtn}>
-                            <SquareX size={18} /> <span>Disconnect</span>
+                        <button onClick={() => router.push('/servers')} className={styles.serversBtn}>
+                            Servers
                         </button>
                         <button onClick={handleLogout} className={styles.logoffBtn}>
                             <LogOut size={18} /> <span>Log out</span>

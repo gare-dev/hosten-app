@@ -1,0 +1,381 @@
+@use 'variable.module' as *;
+
+.container {
+    width: 100%;
+    padding: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 24px;
+
+    h1 {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 4px;
+
+        svg {
+            color: var(--color-brand-primary);
+        }
+    }
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.infoCard {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 10px;
+    margin-bottom: 24px;
+
+    svg {
+        color: #6366f1;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    p {
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.5;
+    }
+}
+
+// Roles Grid
+.rolesGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.roleCard {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--color-brand-primary);
+    }
+
+    &.expanded {
+        grid-column: 1 / -1;
+    }
+}
+
+.roleHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.roleInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.memberCount {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.expandBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background-color: var(--bg-elevated);
+        color: var(--text-primary);
+    }
+}
+
+.roleDescription {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 12px 0 0;
+    line-height: 1.5;
+}
+
+.roleDetails {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// Permissions Section
+.permissionsSection {
+    h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0 0 16px;
+    }
+}
+
+.permissionGroups {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.permissionGroup {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 0;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+
+            svg {
+                color: #10b981;
+                flex-shrink: 0;
+            }
+        }
+    }
+}
+
+.scopeLabel {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &.team {
+        background-color: rgba(99, 102, 241, 0.15);
+        color: #6366f1;
+    }
+
+    &.server {
+        background-color: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+    }
+
+    &.process {
+        background-color: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+    }
+}
+
+// Members Section
+.membersSection {
+    h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0 0 16px;
+    }
+}
+
+.membersList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.memberItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background-color: var(--bg-elevated);
+    border-radius: 8px;
+}
+
+.memberAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.memberInfo {
+    flex: 1;
+    min-width: 0;
+
+    span {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    small {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+}
+
+// Comparison Section
+.comparisonSection {
+    h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0 0 16px;
+    }
+}
+
+.comparisonTable {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    overflow-x: auto;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+
+        th,
+        td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--bg-elevated);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+
+            &:first-child {
+                width: 40%;
+            }
+        }
+
+        td {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+    }
+}
+
+.groupRow {
+    td {
+        background-color: var(--bg-elevated);
+        padding: 8px 16px !important;
+    }
+}
+
+.checkCell {
+    text-align: center !important;
+}
+
+.checkIcon {
+    color: #10b981;
+}
+
+.dash {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+// Loading & Error
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px;
+    color: var(--text-secondary);
+    gap: 12px;
+
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px;
+    text-align: center;
+
+    svg {
+        color: #ef4444;
+        margin-bottom: 16px;
+    }
+
+    p {
+        color: var(--text-secondary);
+        margin: 0;
+    }
+}

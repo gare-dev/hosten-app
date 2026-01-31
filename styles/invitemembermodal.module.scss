@@ -1,0 +1,513 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Invite Member Modal Styles
+// ─────────────────────────────────────────────────────────────────────────────
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-overlay);
+    backdrop-filter: blur(6px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    background: var(--bg-surface);
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.header {
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.iconWrapper {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-success), #059669);
+    color: white;
+}
+
+.titleContent {
+    flex: 1;
+
+    h2 {
+        margin: 0 0 0.25rem 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+}
+
+.closeButton {
+    flex-shrink: 0;
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background: var(--bg-surface-hover);
+        color: var(--text-primary);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Success State
+// ─────────────────────────────────────────────────────────────────────────────
+
+.successContent {
+    padding: 2rem 1.5rem;
+    text-align: center;
+
+    .successIcon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--color-success), #059669);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin: 0 auto 1rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        color: var(--text-primary);
+        margin: 0 0 0.5rem 0;
+    }
+
+    p {
+        color: var(--text-secondary);
+        margin: 0 0 1rem 0;
+    }
+}
+
+.linkBox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+
+    .link {
+        flex: 1;
+        font-family: monospace;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    .copyBtn {
+        flex-shrink: 0;
+        padding: 0.5rem;
+        background: var(--bg-surface-hover);
+        border: none;
+        border-radius: 6px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            background: var(--color-brand-primary);
+            color: white;
+        }
+    }
+}
+
+.expiryNote {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Form
+// ─────────────────────────────────────────────────────────────────────────────
+
+.form {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-primary);
+
+        .required {
+            color: var(--color-error);
+        }
+
+        .optional {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+    }
+
+    &.hasError {
+        label {
+            color: var(--color-error);
+        }
+
+        .formInput {
+            border-color: var(--border-error);
+        }
+    }
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    transition: all 0.2s;
+
+    &::placeholder {
+        color: var(--text-muted);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: var(--border-focus);
+        box-shadow: var(--shadow-focus);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.formTextarea {
+    @extend .formInput;
+    resize: vertical;
+    min-height: 60px;
+    line-height: 1.5;
+}
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--color-error);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Role Selector
+// ─────────────────────────────────────────────────────────────────────────────
+
+.roleSelector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.roleOption {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0.85rem 1rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+
+    &:hover {
+        border-color: var(--border-color-strong);
+        background: var(--bg-surface-hover);
+    }
+
+    &.active {
+        border-color: var(--color-brand-primary);
+        background: rgba(40, 73, 153, 0.1);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.roleIndicator {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 4px;
+}
+
+.roleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .roleName {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+    }
+
+    .roleDesc {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Permissions Accordion
+// ─────────────────────────────────────────────────────────────────────────────
+
+.permissionsAccordion {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    summary {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.85rem 1rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color 0.2s;
+
+        &:hover {
+            color: var(--text-primary);
+        }
+
+        &::marker,
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &::before {
+            content: '▶';
+            font-size: 0.7rem;
+            transition: transform 0.2s;
+        }
+    }
+
+    &[open] summary::before {
+        transform: rotate(90deg);
+    }
+
+    .customBadge {
+        margin-left: auto;
+        padding: 2px 8px;
+        background: var(--color-warning);
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 600;
+        border-radius: 4px;
+    }
+}
+
+.permissionGroups {
+    padding: 0 1rem 1rem;
+}
+
+.permissionGroup {
+    margin-bottom: 1rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    h4 {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0 0 0.5rem 0;
+    }
+}
+
+.permissionList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.permissionItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.35rem 0.6rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.8rem;
+
+    input {
+        cursor: pointer;
+    }
+
+    .permLabel {
+        color: var(--text-secondary);
+    }
+
+    &:hover {
+        border-color: var(--border-color-strong);
+    }
+
+    &:has(input:checked) {
+        background: rgba(40, 73, 153, 0.1);
+        border-color: var(--color-brand-primary);
+
+        .permLabel {
+            color: var(--text-primary);
+        }
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Actions
+// ─────────────────────────────────────────────────────────────────────────────
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+}
+
+.btnSecondary {
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+
+    &:hover:not(:disabled) {
+        background: var(--bg-surface-hover);
+        color: var(--text-primary);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.btnPrimary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: linear-gradient(135deg, var(--color-success), #059669);
+    color: white;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

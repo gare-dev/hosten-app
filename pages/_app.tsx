@@ -1,6 +1,7 @@
 import { AlertProvider } from "@/context/alert-context";
 import { ConfirmProvider } from "@/context/confirm-context";
 import { ServerProvider } from "@/context/server-context";
+import { TeamProvider } from "@/context/team-context";
 import { ThemeProvider } from "@/context/theme-context";
 import "@/styles/theme.scss";
 import "@/styles/globals.css";
@@ -22,11 +23,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <HydrationBoundary state={pageProps.dehydratedState}>
             <ConfirmProvider>
-              <ServerProvider>
-                <AlertProvider>
-                  <Component {...pageProps} />
-                </AlertProvider>
-              </ServerProvider>
+              <TeamProvider>
+                <ServerProvider>
+                  <AlertProvider>
+                    <Component {...pageProps} />
+                  </AlertProvider>
+                </ServerProvider>
+              </TeamProvider>
             </ConfirmProvider>
           </HydrationBoundary>
         </QueryClientProvider>

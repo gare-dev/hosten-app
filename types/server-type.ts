@@ -13,6 +13,10 @@ export interface Server {
     connected: boolean;
     lastSeenAt?: string;
     metrics?: ServerMetrics;
+
+    // Team association
+    teamId?: string;
+    teamName?: string;
 }
 
 export interface ServerResponse {

@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Server } from '@/types/server-type';
 import styles from '@/styles/server.module.scss';
-import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu, Plus, LogOut } from 'lucide-react';
+import { Server as ServerIcon, Info, Activity, RefreshCw, Cpu, Plus, LogOut, Users, ChevronDown } from 'lucide-react';
 import { dehydrate, useQuery, useQueryClient, QueryClient } from '@tanstack/react-query';
 import { serverService } from '@/services/server-service';
 import { useAlert } from '@/context/alert-context';
 import { ThemeToggle } from '@/context/theme-context';
+import { useTeam } from '@/context/team-context';
 import { useRouter } from 'next/router';
 import { AddServerModal } from '@/components/AddServerModal/AddServerModal';
 import Api from '@/api';
@@ -48,10 +49,12 @@ export async function getServerSideProps() {
 export default function ServersPage() {
     const [secondsAgo, setSecondsAgo] = useState(0);
     const [isAddServerOpen, setIsAddServerOpen] = useState(false);
+    const [isTeamDropdownOpen, setIsTeamDropdownOpen] = useState(false);
     const { showAlert } = useAlert();
     const router = useRouter()
     const { confirm } = useConfirm()
     const queryClient = useQueryClient()
+    const { teams, currentTeam, selectTeam } = useTeam();
 
     const { data, isLoading, refetch, dataUpdatedAt } = useQuery({
         queryKey: ['servers'],
@@ -61,6 +64,11 @@ export default function ServersPage() {
     });
 
     const servers = data?.servers || [];
+
+    // Filter servers by current team if a team is selected
+    const filteredServers = currentTeam
+        ? servers.filter((server: Server) => server.teamId === currentTeam.id)
+        : servers;
 
     useEffect(() => {
         const timerInterval = setInterval(() => {
@@ -101,6 +109,44 @@ export default function ServersPage() {
                 </div>
 
                 <div className={styles.controls}>
+                    {/* Team Filter */}
+                    {teams.length > 0 && (
+                        <div className={styles.teamFilter}>
+                            <button
+                                className={styles.teamFilterBtn}
+                                onClick={() => setIsTeamDropdownOpen(!isTeamDropdownOpen)}
+                            >
+                                <Users size={16} />
+                                {currentTeam ? currentTeam.name : 'All Teams'}
+                                <ChevronDown size={14} />
+                            </button>
+                            {isTeamDropdownOpen && (
+                                <div className={styles.teamDropdown}>
+                                    <button
+                                        className={!currentTeam ? styles.active : ''}
+                                        onClick={() => {
+                                            selectTeam(null);
+                                            setIsTeamDropdownOpen(false);
+                                        }}
+                                    >
+                                        All Teams
+                                    </button>
+                                    {teams.map((team) => (
+                                        <button
+                                            key={team.id}
+                                            className={currentTeam?.id === team.id ? styles.active : ''}
+                                            onClick={() => {
+                                                selectTeam(team.id);
+                                                setIsTeamDropdownOpen(false);
+                                            }}
+                                        >
+                                            {team.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
                     <button
                         className={styles.addServerBtn}
                         onClick={() => setIsAddServerOpen(true)}
@@ -128,7 +174,7 @@ export default function ServersPage() {
             </header>
 
             <div className={styles.grid}>
-                {servers.map((server) => {
+                {filteredServers.map((server) => {
                     const isConnected = server.connected === true;
 
                     return (

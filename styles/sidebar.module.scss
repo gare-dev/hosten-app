@@ -1,0 +1,285 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Sidebar Styles
+// Uses CSS custom properties from theme.scss for dark mode support
+// ─────────────────────────────────────────────────────────────────────────────
+
+.sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background-color: var(--bg-sidebar);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+    transition: background-color var(--transition-slow);
+}
+
+.brand {
+    height: var(--header-height);
+    min-height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    border-bottom: 1px solid var(--sidebar-border);
+    flex-shrink: 0;
+
+    span {
+        color: var(--color-brand-primary);
+        margin-left: 4px;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Team Selector
+// ─────────────────────────────────────────────────────────────────────────────
+
+.teamSelector {
+    padding: 1rem;
+    border-bottom: 1px solid var(--sidebar-border);
+    position: relative;
+}
+
+.teamSelectorBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--sidebar-border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--border-color-strong);
+    }
+
+    .teamInfo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+    }
+
+    .teamName {
+        font-weight: 600;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .chevron {
+        flex-shrink: 0;
+        transition: transform 0.2s;
+
+        &.open {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.teamDropdown {
+    position: absolute;
+    top: calc(100% - 0.5rem);
+    left: 1rem;
+    right: 1rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    max-height: 300px;
+    overflow-y: auto;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.loadingTeams,
+.noTeams {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+
+    .spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.teamOption {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-align: left;
+
+    &:hover {
+        background: var(--bg-surface-hover);
+    }
+
+    &.active {
+        background: rgba(40, 73, 153, 0.15);
+        color: var(--color-brand-primary-light);
+    }
+}
+
+.teamDivider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.5rem 0;
+}
+
+.createTeamBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--color-brand-primary-light);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+        background: rgba(40, 73, 153, 0.1);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Navigation
+// ─────────────────────────────────────────────────────────────────────────────
+
+.nav {
+    flex: 1;
+    padding: 1rem 0;
+    overflow-y: auto;
+}
+
+.navSection {
+    margin-bottom: 0.25rem;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--sidebar-text);
+    border-left: 3px solid transparent;
+
+    .label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    &.active {
+        background-color: rgba(40, 73, 153, 0.1);
+        color: var(--sidebar-text-active);
+        border-left-color: var(--color-brand-primary);
+    }
+}
+
+.subMenu {
+    background-color: rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+
+    &.open {
+        max-height: 500px;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    .subItem {
+        padding: 0.75rem 1.5rem 0.75rem 3.5rem;
+        display: block;
+        font-size: 0.85rem;
+        color: var(--sidebar-text);
+        text-decoration: none;
+        transition: all 0.2s;
+
+        &:hover {
+            color: white;
+        }
+
+        &::before {
+            content: '•';
+            margin-right: 8px;
+            color: var(--color-brand-primary);
+        }
+    }
+
+    .activeSubItem {
+        color: white;
+        background-color: rgba(40, 73, 153, 0.15);
+        font-weight: 600;
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Responsive
+// ─────────────────────────────────────────────────────────────────────────────
+
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 50;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+
+        &.open {
+            transform: translateX(0);
+        }
+    }
+}

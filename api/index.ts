@@ -1,6 +1,7 @@
 import loginType from "@/types/login-type";
 import { RegisterPayload } from "@/types/register-type";
 import { CreateServerPayload } from "@/types/create-server";
+import { CreateTeamPayload, UpdateTeamPayload, CreateInvitationPayload, UpdateMemberPayload, TeamRole, TeamPermissionAction } from "@/types/team";
 import { handleDates } from "@/utils/date";
 import { showAlertAfterRedirect } from "@/context/alert-context";
 
@@ -124,6 +125,90 @@ class _Api {
     return this._instance.delete(`/user-role`, {
       data: { userId, roleId }
     });
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Team Endpoints
+  // ─────────────────────────────────────────────────────────────────────────
+
+  public async getTeams() {
+    return this._instance.get('/team');
+  }
+
+  public async getTeam(teamId: string) {
+    return this._instance.get(`/team/${teamId}`);
+  }
+
+  public async createTeam(data: CreateTeamPayload) {
+    return this._instance.post('/team', data);
+  }
+
+  public async updateTeam(teamId: string, data: UpdateTeamPayload) {
+    return this._instance.patch(`/team/${teamId}`, data);
+  }
+
+  public async deleteTeam(teamId: string) {
+    return this._instance.delete(`/team/${teamId}`);
+  }
+
+  // Team Members
+  public async getTeamMembers(teamId: string) {
+    return this._instance.get(`/team/${teamId}/members`);
+  }
+
+  public async updateTeamMember(teamId: string, memberId: string, data: UpdateMemberPayload) {
+    return this._instance.patch(`/team/${teamId}/members/${memberId}`, data);
+  }
+
+  public async removeTeamMember(teamId: string, memberId: string) {
+    return this._instance.delete(`/team/${teamId}/members/${memberId}`);
+  }
+
+  public async leaveTeam(teamId: string) {
+    return this._instance.post(`/team/${teamId}/leave`);
+  }
+
+  // Team Invitations
+  public async getTeamInvitations(teamId: string) {
+    return this._instance.get(`/team-invitation/${teamId}/invitations`);
+  }
+
+  public async createInvitation(data: CreateInvitationPayload) {
+    return this._instance.post(`/team-invitation/team/${data.teamId}/invitations`, data);
+  }
+
+  public async revokeInvitation(teamId: string, invitationId: string) {
+    return this._instance.delete(`/team-invitation/team/${teamId}/invitations/${invitationId}`);
+  }
+
+  public async resendInvitation(teamId: string, invitationId: string) {
+    return this._instance.post(`/team-invitation/team/${teamId}/invitations/${invitationId}/resend`);
+  }
+
+  public async getInvitationByToken(token: string) {
+    return this._instance.get(`/team-invitation/${token}`);
+  }
+
+  public async acceptInvitation(token: string) {
+    return this._instance.post(`/team-invitation/${token}/accept`);
+  }
+
+  // Team Permissions
+  public async getTeamPermissions(teamId: string) {
+    return this._instance.get(`/team/${teamId}/permissions`);
+  }
+
+  public async updateMemberPermissions(teamId: string, memberId: string, permissions: TeamPermissionAction[]) {
+    return this._instance.patch(`/team/${teamId}/members/${memberId}/permissions`, { permissions });
+  }
+
+  // Team Roles
+  public async getTeamRoles(teamId: string) {
+    return this._instance.get(`/team/${teamId}/roles`);
+  }
+
+  public async updateMemberRole(teamId: string, memberId: string, role: TeamRole) {
+    return this._instance.patch(`/team/${teamId}/members/${memberId}/role`, { role });
   }
 
 }
